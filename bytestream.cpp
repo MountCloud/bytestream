@@ -99,6 +99,9 @@ void mc::ByteStream::write(const char* data, mc::BS_DSIZE size){
 }
 
 void mc::ByteStream::write(char* data, mc::BS_DSIZE size){
+    if(size == 0){
+        return;
+    }
     
     //计算写入起始写入bucket的位置
     mc::BS_DSIZE write_bucket_index = m_bucket_count - 1;
@@ -143,6 +146,10 @@ void mc::ByteStream::write(char* data, mc::BS_DSIZE size){
 
 //读取数据
 mc::BS_DSIZE mc::ByteStream::read(char* data, mc::BS_DSIZE size){
+
+    if(size == 0){
+        return size;
+    }
 
     mc::BS_DSIZE readsize = 0;
     mc::BS_DSIZE bssize = this->size();
