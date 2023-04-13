@@ -16,8 +16,21 @@ set(EXECUTABLE_OUTPUT_PATH ${BIN_DIR})
 
 get_filename_component(DIR_ONE_ABOVE ../ ABSOLUTE)
 
-# include(${DIR_ONE_ABOVE}/7z/7z.cmake)
-# include(${DIR_ONE_ABOVE}/util/util.cmake)
+if(MSVC)
+    set(COMPILE_IGNORE_WARNING
+        /wd4828
+    )
+
+    add_compile_options(
+        $<$<CONFIG:>:/MT>
+        $<$<CONFIG:Debug>:/MTd>
+        $<$<CONFIG:Release>:/MT>
+        $<$<C_COMPILER_ID:MSVC>:/utf-8>
+        $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+        ${COMPILE_IGNORE_WARNING}
+    )
+endif()
+
 include_directories(${INCLUDE_DIR})
 
 #exe配置

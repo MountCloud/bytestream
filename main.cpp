@@ -12,7 +12,7 @@ int main(){
     mc::ByteStream* bs = new mc::ByteStream(8);
     
     //write
-    std::string testText = "12345678";
+    std::string testText = "12345678abcdefgh!@#$%^&*";
     bs->write(testText.c_str(), testText.size());
 
     //read
