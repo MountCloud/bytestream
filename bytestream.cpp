@@ -158,15 +158,16 @@ mc::BS_DSIZE mc::ByteStream::read(char* data, mc::BS_DSIZE size){
         return size;
     }
 
-    mc::BS_DSIZE readsize = 0;
+    mc::BS_DSIZE readsize = size;
     mc::BS_DSIZE bssize = this->size();
     if(bssize==0){
-        return readsize;
+        return 0;
     }
 
     if(size>bssize){
         readsize = bssize;
     }
+    
     
     //计算需要读取的bucket数量
     mc::BS_DSIZE size_and_pos = readsize + m_read_pos_in_first_bucket;
