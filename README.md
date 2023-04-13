@@ -11,8 +11,18 @@ C++ bytestream in memory.
 It's a MIT that everyone likes
 
 # 使用简单 Easy to use
+导入import:
+```
+bytestream.h
+bytestream.cpp
+```
 
+参考consult：
+
+```
 main.cpp
+```
+
 
 ```
 #include "bytestream.h"
