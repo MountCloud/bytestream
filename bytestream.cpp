@@ -86,16 +86,21 @@ void mc::ByteStream::_rebucketInfoByRead(mc::BS_DSIZE read_size){
         mc::BS_DSIZE new_read_pos = (read_size + m_read_pos_in_first_bucket) % m_bucket_size;
         m_read_pos_in_first_bucket = new_read_pos;
 
-        //如果就剩下了1个bucket，并且读取的数据刚好把这个bucket读完了，那么就把这个bucket初始化，pos也初始化
-        if(m_bucket_count == 1&& m_read_pos_in_first_bucket == m_write_pos_in_last_bucket && m_write_pos_in_last_bucket > 0){
-            memset(m_buckets[0], 0, m_write_pos_in_last_bucket);
-            m_read_pos_in_first_bucket = 0;
-            m_write_pos_in_last_bucket = 0;
-        }
-    }else{
+    }else if(remove_bucket_count == m_bucket_count){
         //删除干净了
         delete m_buckets;
         _init_once_bucket();
+    }else{
+        mc::BS_DSIZE new_read_pos = (read_size + m_read_pos_in_first_bucket) % m_bucket_size;
+        m_read_pos_in_first_bucket = new_read_pos;
+    }
+
+    
+    //如果就剩下了1个bucket，并且读取的数据刚好把这个bucket读完了，那么就把这个bucket初始化，pos也初始化
+    if(m_bucket_count == 1&& m_read_pos_in_first_bucket == m_write_pos_in_last_bucket && m_write_pos_in_last_bucket > 0){
+        memset(m_buckets[0], 0, m_write_pos_in_last_bucket);
+        m_read_pos_in_first_bucket = 0;
+        m_write_pos_in_last_bucket = 0;
     }
 }
 
